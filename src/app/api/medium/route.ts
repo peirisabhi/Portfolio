@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-static";
+
 const MEDIUM_USERNAME = "abhishekpeiris";
 
 interface MediumItem {

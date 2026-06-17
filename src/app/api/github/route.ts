@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-static";
+
 const GITHUB_USERNAME = "peirisabhi";
 const GITHUB_API = "https://api.github.com";
 
