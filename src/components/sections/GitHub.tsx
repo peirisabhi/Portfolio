@@ -48,7 +48,7 @@ function seededValues(count: number, seed: number): number[] {
 const HEATMAP_VALUES = seededValues(52 * 7, 42);
 
 const FALLBACK: GitHubData = {
-  username: "peirisabhi", publicRepos: 100, followers: 0, totalStars: 0,
+  username: "peirisabhi", publicRepos: 100, followers: 36, totalStars: 3,
   languages: [
     { name: "Java",       count: 40 }, { name: "PHP",        count: 20 },
     { name: "JavaScript", count: 15 }, { name: "Python",     count: 10 },
@@ -114,9 +114,9 @@ export default function GitHub() {
           </div>
         )}
 
-        <div className="grid lg:grid-cols-2 gap-10">
+        <div className="grid lg:grid-cols-2 gap-10" style={{ display:"none" }}>
 
-          {/* Language breakdown */}
+          Language breakdown
           {ghData && (
             <motion.div
               className="glass-card p-6"
