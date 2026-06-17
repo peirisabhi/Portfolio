@@ -100,7 +100,7 @@ export default function Contact() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08, duration: 0.4 }}
-                  whileHover={{ x: 4, borderColor: link.color + "50", background: link.color + "08" } as object}
+                  whileHover={{ x: 4, borderColor: link.color + "50", background: link.color + "08" } as any}
                 >
                   <div
                     className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300"

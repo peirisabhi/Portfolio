@@ -137,7 +137,7 @@ export default function Skills() {
                     key={skill.name}
                     className="px-3 py-1 rounded-full text-xs font-mono border transition-all duration-200 cursor-default"
                     style={{ borderColor: skill.color + "28", color: skill.color, background: skill.color + "08" }}
-                    whileHover={{ scale: 1.05, background: skill.color + "18", boxShadow: `0 0 12px ${skill.color}28` } as object}
+                    whileHover={{ scale: 1.05, background: skill.color + "18", boxShadow: `0 0 12px ${skill.color}28` } as any}
                   >
                     {skill.icon} {skill.name}
                   </motion.span>
