@@ -3,6 +3,18 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
+// Deterministic mini contribution grid — Math.random() during render causes SSR hydration mismatch
+function seededValues(count: number, seed: number): number[] {
+  const out: number[] = [];
+  let s = seed;
+  for (let i = 0; i < count; i++) {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    out.push((s >>> 0) / 4294967295);
+  }
+  return out;
+}
+const MINI_GRID_VALUES = seededValues(5 * 12, 99);
+
 const CODE_LINES = [
   { text: "@SpringBootApplication", color: "#A78BFA" },
   { text: "public class MainApp {", color: "#F8FAFC" },
@@ -194,7 +206,7 @@ export default function DeveloperCharacter() {
           {/* Contribution grid */}
           {Array.from({ length: 5 }).map((_, row) =>
             Array.from({ length: 12 }).map((_, col) => {
-              const intensity = Math.random();
+              const intensity = MINI_GRID_VALUES[row * 12 + col];
               const color = intensity > 0.7 ? "#7C3AED" : intensity > 0.4 ? "#5B21B6" : "#1E293B";
               return (
                 <rect

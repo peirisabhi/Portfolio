@@ -12,13 +12,7 @@ interface SectionWrapperProps {
   label?: string;
 }
 
-export default function SectionWrapper({
-  id,
-  children,
-  className,
-  tag,
-  label,
-}: SectionWrapperProps) {
+export default function SectionWrapper({ id, children, className, tag, label }: SectionWrapperProps) {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -36,9 +30,7 @@ export default function SectionWrapper({
           className="container mx-auto px-4 sm:px-6 lg:px-8 mb-3 flex items-center gap-3"
         >
           <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-transparent to-primary" />
-          <span className="text-primary text-sm font-mono font-medium tracking-widest uppercase">
-            {tag}
-          </span>
+          <span className="text-primary text-sm font-mono font-medium tracking-widest uppercase">{tag}</span>
           <div className="h-px w-4 bg-primary" />
         </motion.div>
       )}

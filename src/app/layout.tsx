@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/ui/ThemeProvider";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
     "Spring Boot",
     "Android Developer",
     "Sri Lanka",
-    "Virtusa",
+    "VitalHub",
     "Portfolio",
   ],
   authors: [{ name: "Abhishek Peiris" }],
@@ -52,14 +53,7 @@ export const metadata: Metadata = {
     description:
       "Passionate Software Engineer from Sri Lanka focused on building scalable software solutions.",
     siteName: "Abhishek Peiris Portfolio",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Abhishek Peiris Portfolio",
-      },
-    ],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Abhishek Peiris Portfolio" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -78,28 +72,43 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "your-google-verification-code",
-  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
+      // suppressHydrationWarning prevents the class mismatch warning when
+      // ThemeProvider adds/removes "dark" after hydration
+      suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#0B0F19" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content="#7C3AED" />
+        {/* Inline script to apply saved theme before first paint — prevents flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var t = localStorage.getItem('portfolio-theme') || 'dark';
+                  if (t !== 'light') document.documentElement.classList.add('dark');
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
       </head>
-      <body className="bg-bg text-text-primary font-body antialiased">
-        {children}
+      <body suppressHydrationWarning className="bg-bg text-text-primary font-body antialiased transition-colors duration-300">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

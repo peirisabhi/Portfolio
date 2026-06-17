@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Terminal } from "lucide-react";
-import { NAV_LINKS, PERSONAL_INFO } from "@/lib/constants";
+import { NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,29 +15,20 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-
       const sections = ["hero", "about", "skills", "experience", "projects", "github", "blog", "contact"];
       const scrollPos = window.scrollY + 100;
-
-      for (const section of sections.reverse()) {
+      for (const section of [...sections].reverse()) {
         const el = document.getElementById(section);
-        if (el && el.offsetTop <= scrollPos) {
-          setActiveSection(section);
-          break;
-        }
+        if (el && el.offsetTop <= scrollPos) { setActiveSection(section); break; }
       }
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleNavClick = (href: string) => {
     setIsOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
@@ -47,12 +39,14 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         scrolled
-          ? "py-3 bg-bg/80 backdrop-blur-xl border-b border-white/5 shadow-lg"
+          ? "py-3 backdrop-blur-xl border-b shadow-sm"
           : "py-5 bg-transparent"
       )}
+      style={scrolled ? { background: "var(--nav-bg)", borderColor: "var(--color-border)" } : {}}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
+
           {/* Logo */}
           <motion.a
             href="#hero"
@@ -66,20 +60,15 @@ export default function Navbar() {
               <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary to-secondary opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300" />
             </div>
             <div className="flex flex-col leading-none">
-              <span className="font-heading font-bold text-text-primary text-sm">
-                Abhishek
-              </span>
-              <span className="text-xs text-text-secondary font-mono">
-                Peiris
-              </span>
+              <span className="font-heading font-bold text-text-primary text-sm">Abhishek</span>
+              <span className="text-xs text-text-secondary font-mono">Peiris</span>
             </div>
           </motion.a>
 
-          {/* Desktop Nav */}
+          {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
             {NAV_LINKS.map((link, i) => {
-              const sectionId = link.href.slice(1);
-              const isActive = activeSection === sectionId;
+              const isActive = activeSection === link.href.slice(1);
               return (
                 <motion.button
                   key={link.href}
@@ -89,9 +78,7 @@ export default function Navbar() {
                   transition={{ delay: 0.1 * i, duration: 0.4 }}
                   className={cn(
                     "relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-                    isActive
-                      ? "text-primary"
-                      : "text-text-secondary hover:text-text-primary"
+                    isActive ? "text-primary" : "text-text-secondary hover:text-text-primary"
                   )}
                 >
                   {isActive && (
@@ -107,8 +94,10 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* CTA + Mobile Toggle */}
-          <div className="flex items-center gap-3">
+          {/* Right side: theme toggle + CTA + hamburger */}
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+
             <motion.a
               href="#contact"
               onClick={(e) => { e.preventDefault(); handleNavClick("#contact"); }}
@@ -133,15 +122,16 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden overflow-hidden bg-bg/95 backdrop-blur-xl border-b border-white/5"
+            transition={{ duration: 0.3 }}
+            className="md:hidden overflow-hidden backdrop-blur-xl border-b"
+            style={{ background: "var(--nav-bg)", borderColor: "var(--color-border)" }}
           >
             <nav className="container mx-auto px-4 py-4 flex flex-col gap-1">
               {NAV_LINKS.map((link, i) => (
@@ -155,17 +145,14 @@ export default function Navbar() {
                     "text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200",
                     activeSection === link.href.slice(1)
                       ? "text-primary bg-primary/10"
-                      : "text-text-secondary hover:text-text-primary hover:bg-white/5"
+                      : "text-text-secondary hover:text-text-primary hover:bg-primary/5"
                   )}
                 >
                   {link.label}
                 </motion.button>
               ))}
               <div className="mt-2 pt-2 border-t border-border">
-                <button
-                  onClick={() => handleNavClick("#contact")}
-                  className="btn-primary w-full text-sm py-2.5"
-                >
+                <button onClick={() => handleNavClick("#contact")} className="btn-primary w-full text-sm py-2.5">
                   Hire Me
                 </button>
               </div>

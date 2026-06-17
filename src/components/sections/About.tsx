@@ -1,36 +1,17 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { MapPin, Briefcase, Code2, Lightbulb, Heart, Coffee } from "lucide-react";
+import { motion } from "framer-motion";
+import { MapPin, Briefcase, Code2, Lightbulb, Heart, Coffee, Globe, Layers } from "lucide-react";
 import { TIMELINE, PERSONAL_INFO } from "@/lib/constants";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 
 const HIGHLIGHTS = [
-  {
-    icon: Code2,
-    label: "Clean Code",
-    desc: "Writing maintainable, scalable, and efficient code",
-    color: "#7C3AED",
-  },
-  {
-    icon: Lightbulb,
-    label: "Innovation",
-    desc: "Turning creative ideas into real-world products",
-    color: "#06B6D4",
-  },
-  {
-    icon: Heart,
-    label: "Passion",
-    desc: "Deeply passionate about software engineering & tech",
-    color: "#22C55E",
-  },
-  {
-    icon: Coffee,
-    label: "Always Learning",
-    desc: "Exploring AI, cloud, and emerging technologies",
-    color: "#F59E0B",
-  },
+  { icon: Code2,     label: "Clean Code",        desc: "Writing maintainable, scalable, and efficient code",                        color: "#7C3AED" },
+  { icon: Lightbulb, label: "Innovation",         desc: "Turning creative ideas into real-world digital products",                   color: "#06B6D4" },
+  { icon: Heart,     label: "Passion",            desc: "Deeply passionate about software engineering & solving hard problems",      color: "#22C55E" },
+  { icon: Coffee,    label: "Always Learning",    desc: "Exploring AI, cloud, IoT, and emerging technologies every day",            color: "#F59E0B" },
+  { icon: Globe,     label: "Open Source",        desc: "100+ repositories on GitHub — sharing tools and ideas with the community", color: "#EC4899" },
+  { icon: Layers,    label: "Full Stack Mindset", desc: "Comfortable from embedded hardware to cloud-scale distributed systems",    color: "#38BDF8" },
 ];
 
 export default function About() {
@@ -47,40 +28,31 @@ export default function About() {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="section-heading mb-6">
-                About{" "}
-                <span className="gradient-text">Me</span>
-              </h2>
+              <h2 className="section-heading mb-6">About <span className="gradient-text">Me</span></h2>
               <div className="space-y-4 text-text-secondary leading-relaxed">
                 <p>
                   I&apos;m <span className="text-text-primary font-medium">Abhishek Peiris</span>, a Software Engineer
-                  from <span className="text-accent">🇱🇰 Sri Lanka</span>, currently building enterprise-scale solutions
-                  at <span className="text-primary font-medium">Virtusa</span>.
+                  from <span className="text-accent">🇱🇰 Sri Lanka</span>, currently building enterprise-scale
+                  solutions at <span className="text-primary font-medium">VitalHub Innovations Lab</span>.
                 </p>
                 <p>
-                  My journey in software development started with a deep curiosity for how technology can solve
-                  real-world problems. I specialize in backend systems with{" "}
+                  My journey started with a deep curiosity for how technology can solve real-world problems.
+                  I specialize in backend systems with{" "}
                   <span className="text-primary font-medium">Java & Spring Boot</span>, mobile apps with{" "}
                   <span className="text-secondary font-medium">Android</span>, and full-stack web development.
                 </p>
                 <p>
                   Beyond writing code, I&apos;m fascinated by software architecture, distributed systems, and how
-                  AI is reshaping the way we build software. I actively contribute to open source and enjoy
-                  sharing knowledge through my{" "}
-                  <a
-                    href={PERSONAL_INFO.social.medium}
-                    className="text-primary hover:underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  AI is reshaping the way we build software. I actively contribute to open source and share
+                  knowledge via my{" "}
+                  <a href={PERSONAL_INFO.social.medium} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
                     Medium blog
                   </a>.
                 </p>
               </div>
             </motion.div>
 
-            {/* Highlights grid */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {HIGHLIGHTS.map((h, i) => (
                 <motion.div
                   key={h.label}
@@ -92,7 +64,7 @@ export default function About() {
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110"
-                    style={{ background: h.color + "20", boxShadow: `0 0 20px ${h.color}20` }}
+                    style={{ background: h.color + "18", boxShadow: `0 0 20px ${h.color}18` }}
                   >
                     <h.icon className="w-5 h-5" style={{ color: h.color }} />
                   </div>
@@ -102,7 +74,6 @@ export default function About() {
               ))}
             </div>
 
-            {/* Info chips */}
             <motion.div
               className="flex flex-wrap gap-3"
               initial={{ opacity: 0 }}
@@ -111,12 +82,13 @@ export default function About() {
               transition={{ delay: 0.4, duration: 0.5 }}
             >
               {[
-                { icon: MapPin, label: "Sri Lanka", color: "text-accent" },
-                { icon: Briefcase, label: "Virtusa", color: "text-primary" },
+                { icon: MapPin,   label: "Sri Lanka", color: "text-accent"   },
+                { icon: Briefcase, label: "VitalHub",   color: "text-primary"  },
               ].map(({ icon: Icon, label, color }) => (
                 <div
                   key={label}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-surface/50 text-sm"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full border text-sm"
+                  style={{ borderColor: "var(--color-border)", background: "var(--color-bg-elevated)" }}
                 >
                   <Icon className={`w-4 h-4 ${color}`} />
                   <span className="text-text-secondary">{label}</span>
@@ -126,7 +98,7 @@ export default function About() {
           </div>
 
           {/* Right: Timeline */}
-          <div className="relative">
+          <div>
             <motion.h3
               className="font-heading font-bold text-xl text-text-primary mb-8"
               initial={{ opacity: 0, x: 30 }}
@@ -138,13 +110,9 @@ export default function About() {
             </motion.h3>
 
             <div className="relative pl-12">
-              {/* Vertical line */}
               <div
                 className="absolute left-5 top-0 bottom-0 w-px"
-                style={{
-                  background:
-                    "linear-gradient(180deg, transparent, #7C3AED 10%, #06B6D4 50%, #22C55E 90%, transparent)",
-                }}
+                style={{ background: "linear-gradient(180deg, transparent, #7C3AED 10%, #06B6D4 50%, #22C55E 90%, transparent)" }}
               />
 
               {TIMELINE.map((item, i) => (
@@ -156,20 +124,14 @@ export default function About() {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ delay: i * 0.1, duration: 0.5 }}
                 >
-                  {/* Dot */}
                   <motion.div
                     className="absolute -left-[29px] w-8 h-8 rounded-xl flex items-center justify-center text-sm z-10"
-                    style={{
-                      background: item.color + "20",
-                      border: `1px solid ${item.color}50`,
-                      boxShadow: `0 0 15px ${item.color}30`,
-                    }}
+                    style={{ background: item.color + "18", border: `1px solid ${item.color}45`, boxShadow: `0 0 15px ${item.color}25` }}
                     whileHover={{ scale: 1.2 }}
                   >
                     {item.icon}
                   </motion.div>
 
-                  {/* Content card */}
                   <motion.div
                     className="glass-card p-4 ml-4 group cursor-default"
                     whileHover={{ x: 4 }}
@@ -181,11 +143,7 @@ export default function About() {
                       </h4>
                       <span
                         className="text-xs font-mono px-2 py-0.5 rounded-full"
-                        style={{
-                          color: item.color,
-                          background: item.color + "15",
-                          border: `1px solid ${item.color}30`,
-                        }}
+                        style={{ color: item.color, background: item.color + "12", border: `1px solid ${item.color}28` }}
                       >
                         {item.year}
                       </span>
@@ -196,6 +154,7 @@ export default function About() {
               ))}
             </div>
           </div>
+
         </div>
       </div>
     </SectionWrapper>

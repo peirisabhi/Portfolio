@@ -3,22 +3,20 @@
 import { useEffect, useRef } from "react";
 
 interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  size: number;
-  opacity: number;
-  color: string;
-  life: number;
-  maxLife: number;
+  x: number; y: number; vx: number; vy: number;
+  size: number; opacity: number; color: string;
+  life: number; maxLife: number;
 }
 
+const LIGHT_COLORS = ["#7C3AED", "#06B6D4", "#22C55E", "#8B5CF6", "#0891B2"];
+const DARK_COLORS  = ["#7C3AED", "#06B6D4", "#22C55E", "#A78BFA", "#38BDF8"];
+
 export default function ParticleBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<number>(0);
+  const canvasRef    = useRef<HTMLCanvasElement>(null);
+  const animRef      = useRef<number>(0);
   const particlesRef = useRef<Particle[]>([]);
-  const mouseRef = useRef({ x: 0, y: 0 });
+  const mouseRef     = useRef({ x: 0, y: 0 });
+  const isDarkRef    = useRef(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -26,64 +24,53 @@ export default function ParticleBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const colors = ["#7C3AED", "#06B6D4", "#22C55E", "#A78BFA", "#38BDF8"];
+    const getColors = () =>
+      document.documentElement.classList.contains("dark") ? DARK_COLORS : LIGHT_COLORS;
 
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    const getOpacityScale = () =>
+      document.documentElement.classList.contains("dark") ? 1 : 0.6;
+
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     resize();
     window.addEventListener("resize", resize);
+    window.addEventListener("mousemove", (e) => { mouseRef.current = { x: e.clientX, y: e.clientY }; }, { passive: true });
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+    const createParticle = (): Particle => {
+      const colors = getColors();
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        size: Math.random() * 2 + 0.5,
+        opacity: Math.random() * 0.5 + 0.1,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        life: 0,
+        maxLife: Math.random() * 200 + 100,
+      };
     };
-    window.addEventListener("mousemove", handleMouseMove);
 
-    const createParticle = (): Particle => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.5,
-      vy: (Math.random() - 0.5) * 0.5,
-      size: Math.random() * 2 + 0.5,
-      opacity: Math.random() * 0.5 + 0.1,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      life: 0,
-      maxLife: Math.random() * 200 + 100,
-    });
-
-    // Initialize particles
-    for (let i = 0; i < 80; i++) {
-      particlesRef.current.push(createParticle());
-    }
+    for (let i = 0; i < 80; i++) particlesRef.current.push(createParticle());
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const opScale = getOpacityScale();
 
       particlesRef.current.forEach((p, i) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life++;
+        p.x += p.vx; p.y += p.vy; p.life++;
 
-        // Wrap around
         if (p.x < 0) p.x = canvas.width;
         if (p.x > canvas.width) p.x = 0;
         if (p.y < 0) p.y = canvas.height;
         if (p.y > canvas.height) p.y = 0;
 
-        // Fade in/out
-        const lifeFraction = p.life / p.maxLife;
-        const alpha = lifeFraction < 0.1
-          ? lifeFraction * 10 * p.opacity
-          : lifeFraction > 0.9
-          ? (1 - (lifeFraction - 0.9) * 10) * p.opacity
-          : p.opacity;
+        const lf = p.life / p.maxLife;
+        const baseAlpha = lf < 0.1 ? lf * 10 * p.opacity : lf > 0.9 ? (1 - (lf - 0.9) * 10) * p.opacity : p.opacity;
+        const alpha = baseAlpha * opScale;
 
-        if (p.life >= p.maxLife) {
-          particlesRef.current[i] = createParticle();
-        }
+        if (p.life >= p.maxLife) particlesRef.current[i] = createParticle();
 
-        // Mouse interaction
+        // Mouse repulsion
         const dx = mouseRef.current.x - p.x;
         const dy = mouseRef.current.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
@@ -93,22 +80,22 @@ export default function ParticleBackground() {
           p.vy -= (dy / dist) * force * 0.02;
         }
 
-        // Draw particle
+        // Draw dot
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = p.color + Math.floor(alpha * 255).toString(16).padStart(2, "0");
         ctx.fill();
 
-        // Draw connections
+        // Connections
         particlesRef.current.slice(i + 1, i + 6).forEach((p2) => {
           const dx2 = p.x - p2.x;
           const dy2 = p.y - p2.y;
-          const dist2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
-          if (dist2 < 120) {
+          const d2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
+          if (d2 < 120) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            const lineAlpha = ((1 - dist2 / 120) * 0.15).toFixed(2);
+            const lineAlpha = ((1 - d2 / 120) * 0.12 * opScale).toFixed(2);
             ctx.strokeStyle = `rgba(124, 58, 237, ${lineAlpha})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
@@ -116,23 +103,16 @@ export default function ParticleBackground() {
         });
       });
 
-      animationRef.current = requestAnimationFrame(animate);
+      animRef.current = requestAnimationFrame(animate);
     };
 
     animate();
 
     return () => {
-      cancelAnimationFrame(animationRef.current);
+      cancelAnimationFrame(animRef.current);
       window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
-      style={{ opacity: 0.4 }}
-    />
-  );
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" style={{ opacity: 1 }} />;
 }
