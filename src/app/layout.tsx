@@ -25,71 +25,84 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://peirisabhi.github.io/Portfolio"),
-  title: {
-    default: "Abhishek Peiris — Software Engineer & Full Stack Developer",
-    template: "%s | Abhishek Peiris",
-  },
-  description:
-    "Abhishek Peiris is a Software Engineer from Sri Lanka with 5+ years of experience in Java, Spring Boot, Android, and full-stack development. Currently at VitalHub Innovations Lab building healthcare interoperability solutions.",
-  keywords: [
-    "Abhishek Peiris",
-    "abhishek peiris",
-    "peirisabhi",
-    "Software Engineer Sri Lanka",
-    "Java Developer Sri Lanka",
-    "Spring Boot Developer",
-    "Android Developer",
-    "Full Stack Developer",
-    "VitalHub Innovations Lab",
-    "Cardiff Metropolitan University",
-    "MSc Data Science",
-    "Healthcare Software Engineer",
-    "Negombo Sri Lanka",
-    "Portfolio",
-  ],
-  authors: [{ name: "Abhishek Peiris", url: "https://peirisabhi.github.io/Portfolio" }],
-  creator: "Abhishek Peiris",
-  publisher: "Abhishek Peiris",
-  alternates: {
-    canonical: "https://peirisabhi.github.io/Portfolio",
-  },
-  openGraph: {
-    type: "profile",
-    locale: "en_US",
-    url: "https://peirisabhi.github.io/Portfolio",
-    title: "Abhishek Peiris — Software Engineer & Full Stack Developer",
-    description:
-      "Abhishek Peiris is a Software Engineer from Sri Lanka specialising in Java, Spring Boot, Android, and healthcare interoperability. 5+ years experience, MSc Data Science.",
-    siteName: "Abhishek Peiris",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Abhishek Peiris — Software Engineer" }],
-    firstName: "Abhishek",
-    lastName: "Peiris",
-    username: "peirisabhi",
-    gender: "male",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Abhishek Peiris — Software Engineer",
-    description: "Software Engineer from Sri Lanka · Java · Spring Boot · Android · Healthcare Tech · MSc Data Science",
-    images: ["/og-image.png"],
-    creator: "@peirisabhi",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+    metadataBase: new URL('https://peirisabhi.github.io/Portfolio'),
+    title: {
+        default: 'Abhishek Peiris — Software Engineer & Full Stack Developer',
+        template: '%s | Abhishek Peiris',
     },
-  },
-  verification: {
-    // Add your Google Search Console verification token here once you set it up:
-    // google: "your-verification-token",
-  },
+    description:
+        'Abhishek Peiris is a Software Engineer from Sri Lanka with 5+ years of experience in Java, Spring Boot, Android, and full-stack development. Currently at VitalHub Innovations Lab building healthcare interoperability solutions.',
+    keywords: [
+        'Abhishek Peiris',
+        'abhishek peiris',
+        'peirisabhi',
+        'Software Engineer Sri Lanka',
+        'Java Developer Sri Lanka',
+        'Spring Boot Developer',
+        'Android Developer',
+        'Full Stack Developer',
+        'VitalHub Innovations Lab',
+        'Cardiff Metropolitan University',
+        'MSc Data Science',
+        'Healthcare Software Engineer',
+        'Negombo Sri Lanka',
+        'Portfolio',
+    ],
+    authors: [
+        {
+            name: 'Abhishek Peiris',
+            url: 'https://peirisabhi.github.io/Portfolio',
+        },
+    ],
+    creator: 'Abhishek Peiris',
+    publisher: 'Abhishek Peiris',
+    alternates: {
+        canonical: 'https://peirisabhi.github.io/Portfolio',
+    },
+    openGraph: {
+        type: 'profile',
+        locale: 'en_US',
+        url: 'https://peirisabhi.github.io/Portfolio',
+        title: 'Abhishek Peiris — Software Engineer & Full Stack Developer',
+        description:
+            'Abhishek Peiris is a Software Engineer from Sri Lanka specialising in Java, Spring Boot, Android, and healthcare interoperability. 5+ years experience, MSc Data Science.',
+        siteName: 'Abhishek Peiris',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'Abhishek Peiris — Software Engineer',
+            },
+        ],
+        firstName: 'Abhishek',
+        lastName: 'Peiris',
+        username: 'peirisabhi',
+        gender: 'male',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Abhishek Peiris — Software Engineer',
+        description:
+            'Software Engineer from Sri Lanka · Java · Spring Boot · Android · Healthcare Tech · MSc Data Science',
+        images: ['/og-image.png'],
+        creator: '@peirisabhi',
+    },
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+        },
+    },
+    verification: {
+        // Add your Google Search Console verification token here once you set it up:
+        google: 'FyHLWMExjaXCHJlo6NMB0duyF5vtmJ_1VtI0rbxJEH4',
+    },
 };
 
 export default function RootLayout({
