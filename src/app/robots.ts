@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: "https://abhishekpeiris.dev/sitemap.xml",
+    sitemap: "https://peirisabhi.github.io/Portfolio/sitemap.xml",
   };
 }

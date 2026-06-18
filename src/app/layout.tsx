@@ -25,41 +25,55 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://abhishekpeiris.dev"),
+  metadataBase: new URL("https://peirisabhi.github.io/Portfolio"),
   title: {
     default: "Abhishek Peiris — Software Engineer & Full Stack Developer",
     template: "%s | Abhishek Peiris",
   },
   description:
-    "Passionate Software Engineer from Sri Lanka focused on building scalable software solutions. Experienced in Java, Spring Boot, Android, PHP, JavaScript and modern web technologies.",
+    "Abhishek Peiris is a Software Engineer from Sri Lanka with 5+ years of experience in Java, Spring Boot, Android, and full-stack development. Currently at VitalHub Innovations Lab building healthcare interoperability solutions.",
   keywords: [
     "Abhishek Peiris",
-    "Software Engineer",
-    "Full Stack Developer",
-    "Java Developer",
-    "Spring Boot",
+    "abhishek peiris",
+    "peirisabhi",
+    "Software Engineer Sri Lanka",
+    "Java Developer Sri Lanka",
+    "Spring Boot Developer",
     "Android Developer",
-    "Sri Lanka",
-    "VitalHub",
+    "Full Stack Developer",
+    "VitalHub Innovations Lab",
+    "Cardiff Metropolitan University",
+    "MSc Data Science",
+    "Healthcare Software Engineer",
+    "Negombo Sri Lanka",
     "Portfolio",
   ],
-  authors: [{ name: "Abhishek Peiris" }],
+  authors: [{ name: "Abhishek Peiris", url: "https://peirisabhi.github.io/Portfolio" }],
   creator: "Abhishek Peiris",
+  publisher: "Abhishek Peiris",
+  alternates: {
+    canonical: "https://peirisabhi.github.io/Portfolio",
+  },
   openGraph: {
-    type: "website",
+    type: "profile",
     locale: "en_US",
-    url: "https://abhishekpeiris.dev",
+    url: "https://peirisabhi.github.io/Portfolio",
     title: "Abhishek Peiris — Software Engineer & Full Stack Developer",
     description:
-      "Passionate Software Engineer from Sri Lanka focused on building scalable software solutions.",
-    siteName: "Abhishek Peiris Portfolio",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Abhishek Peiris Portfolio" }],
+      "Abhishek Peiris is a Software Engineer from Sri Lanka specialising in Java, Spring Boot, Android, and healthcare interoperability. 5+ years experience, MSc Data Science.",
+    siteName: "Abhishek Peiris",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Abhishek Peiris — Software Engineer" }],
+    firstName: "Abhishek",
+    lastName: "Peiris",
+    username: "peirisabhi",
+    gender: "male",
   },
   twitter: {
     card: "summary_large_image",
     title: "Abhishek Peiris — Software Engineer",
-    description: "Passionate Software Engineer from Sri Lanka building scalable solutions.",
+    description: "Software Engineer from Sri Lanka · Java · Spring Boot · Android · Healthcare Tech · MSc Data Science",
     images: ["/og-image.png"],
+    creator: "@peirisabhi",
   },
   robots: {
     index: true,
@@ -71,6 +85,10 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  verification: {
+    // Add your Google Search Console verification token here once you set it up:
+    // google: "your-verification-token",
   },
 };
 
@@ -91,6 +109,49 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#7C3AED" />
+        {/* JSON-LD Person schema — tells Google exactly who this page is about */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Abhishek Peiris",
+              alternateName: ["peirisabhi", "Abhishek P"],
+              url: "https://peirisabhi.github.io/Portfolio",
+              image: "https://peirisabhi.github.io/Portfolio/og-image.png",
+              jobTitle: "Software Engineer",
+              description: "Software Engineer from Sri Lanka with 5+ years of experience in Java, Spring Boot, Android, and full-stack development. Currently building healthcare interoperability solutions at VitalHub Innovations Lab.",
+              nationality: {
+                "@type": "Country",
+                name: "Sri Lanka",
+              },
+              worksFor: {
+                "@type": "Organization",
+                name: "VitalHub Innovations Lab",
+                url: "https://vitalhub.com",
+              },
+              alumniOf: [
+                {
+                  "@type": "EducationalOrganization",
+                  name: "Cardiff Metropolitan University",
+                  url: "https://www.cardiffmet.ac.uk",
+                },
+              ],
+              knowsAbout: [
+                "Java", "Spring Boot", "Android Development", "Kotlin",
+                "JavaScript", "TypeScript", "React", "Next.js", "PHP",
+                "Python", "Healthcare Interoperability", "Microservices",
+                "Full Stack Development", "Software Engineering",
+              ],
+              sameAs: [
+                "https://github.com/peirisabhi",
+                "https://www.linkedin.com/in/abhishekpeiris",
+                "https://medium.com/@abhishekpeiris",
+              ],
+            }),
+          }}
+        />
         {/* Inline script to apply saved theme before first paint — prevents flash */}
         <script
           dangerouslySetInnerHTML={{
